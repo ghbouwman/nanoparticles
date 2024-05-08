@@ -1,21 +1,23 @@
 # Functions that define the physical model.
 
+import numpy as np
+
 # Physical parameters.
-SUBSTRATE_SIZE = 1e-6 # width/height of the substrate
+SUBSTRATE_SIZE = .5e-6 # width/height of the substrate
 PARTICLE_DIAMETER_MEAN = 20e-9 # 10 nm
 PARTICLE_DIAMETER_STD = 1e-9 # 1 nm
 HIGH_RESISTANCE = 1e15 # very high resistance between the source and drain
 BIAS = 2e-3 # 2mV; voltage over the source and drain
 TOUCHING_RESISTANCE = 1e-7
-EXPONENTIAL_DECAY_CONSTANT = 1e9 # 1/m # quantum tunneling effect or something
 RESISTIVITY = 53.4e-9 # Resistivity of the material
 MATERIAL_CHARGE_DENSITY = 1e-3
 BREAKAWAY_ENERGY = 6.4e-16
 BREAKAWAY_ENERGY *= 30
-MAX_DISTANCE = 10e-9
+MAX_DISTANCE = 5e-9
 
 ELEMENTARY_CHARGE = 1.6e-19
 PLANCK_CONSTANT = 6.626e-34
+HBAR = PLANCK_CONSTANT / (2*np.pi)
 CONDUCTANCE_QUANTUM = 2*ELEMENTARY_CHARGE**2/PLANCK_CONSTANT
 RESISTANCE_QUANTUM = 1/CONDUCTANCE_QUANTUM
 TOUCHING_RESISTANCE = RESISTANCE_QUANTUM
@@ -24,18 +26,25 @@ MATERIAL_CHARGE_DENSITY = ELEMENTARY_CHARGE/DALTON # 1e8
 MAX_CURRENT = BIAS / HIGH_RESISTANCE
 FILAMENT_TIMESCALE = 1e-19
 
+ELECTRON_MASS = 9.11e-31
+WORK_FUNCTION_MO = 7.44e-19 # 6.985~7.931; GM: 7.44, 4.65 eV
+SCHRODINGER_CONSTANT = 2*ELECTRON_MASS / HBAR**2
+TUNNELING_SCALE = 1 / np.sqrt(SCHRODINGER_CONSTANT*WORK_FUNCTION_MO)
+
 assert MAX_DISTANCE < SUBSTRATE_SIZE
 
-import numpy as np
+print(TUNNELING_SCALE)
 
 def resistance(distance, sum_of_radii):
 
     is_overlapping = distance < 0
-    overlap_resistance = is_overlapping/(-distance/RESISTIVITY+CONDUCTANCE_QUANTUM)
-    
-
     is_seperated = distance > 0
-    seperation_resistance = is_seperated * RESISTANCE_QUANTUM*np.exp(distance.astype(np.float32)*EXPONENTIAL_DECAY_CONSTANT)
+
+    overlap = -distance
+
+    overlap_resistance = is_overlapping * RESISTANCE_QUANTUM
+
+    seperation_resistance = is_seperated * RESISTANCE_QUANTUM*np.exp(2*distance.astype(np.float32)/TUNNELING_SCALE)
 
     return overlap_resistance + seperation_resistance
 
