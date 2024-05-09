@@ -1,0 +1,170 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{circuitikz}
+
+\DeclareMathOperator\erf{erf}
+
+\title{Nanoscience Project}
+\author{Hans Bouwman}
+
+\begin{document}
+
+\maketitle
+
+\section{Theory}
+
+\begin{circuitikz} \draw
+(0,0) to[battery, l_=$V$] (8,0)
+    to[R, l_=$R_S$] (8,-4) -- (7,-4)
+    -- (7,-6) to[R, l_=$R_G/R_F$] (4,-6) to[normal open switch] (1,-6) -- (1,-4)
+    (7,-4) to[R, *-*, l_=$R_C$] (1,-4) -- (0,-4) -- (0,0)
+;
+\end{circuitikz}
+
+
+
+
+\subsection{Gap}
+\[R_{total} = R_S+R_C\]
+By voltage divider we get the voltage over the gap:
+\[V_G=V\frac{R_C}{R_S+R_C}\]
+Suppose one of the sides of the gap, the electric force it experiences depends on the voltage and gap size $x$:
+\[\vec{\mathbb{E}}=\frac{V_F}{x}\]
+since the gap closes from both sides we have a factor of 2 in the acceleration, we find the ODE
+\[\Ddot{x}=-\frac{k}{x}\]
+where
+\[k=\frac{2qV_F}{m}\]
+TODO: can we say somthing about $q$ and $m$\\
+we solve the equation as an intial value problem with
+\[x(0)=x_0\text{ and }\dot{x}(0)=0\]
+the ODE itself yields:
+\[x(t)=\exp\left\{\frac{c_1-2k\erf^{-1}\left(\pm|c_2+t|\sqrt{\frac{2k}{\pi}e^{-c_1/k}}\right)^2}{2k}\right\}\]
+We make the \textit{ansatz} $c_2=0$ and only consider positive quantities.
+\[x(t)=\exp\left\{\frac{c_1-2k\erf^{-1}\left(t\sqrt{\frac{2k}{\pi}e^{-c_1/k}}\right)^2}{2k}\right\}\]
+\[x(t)=\exp\left\{\frac{c_1}{2k}\right\}\cdot
+\exp\left\{{-\erf^{-1}\left(t\sqrt{\frac{2k}{\pi}e^{-c_1/k}}\right)^2}\right\}\]
+Since $\erf^{-1}(0)=0$:
+\[x(0)=\exp\left\{\frac{c_1}{2k}\right\}=x_0\]
+we get
+\[x(t)=x_0\exp\left\{{-\erf^{-1}\left(t\sqrt{\frac{2k}{\pi}e^{-c_1/k}}\right)^2}\right\}\]
+the value for $c_1$ thus also implies
+\[c_1=2k\ln{x_0}\]
+which we substitute
+\[x(t)=x_0\exp\left\{{-\erf^{-1}\left(t\sqrt{\frac{2k}{\pi}e^{-2k\ln{x_0}/k}}\right)^2}\right\}\]
+which simplifies to
+\[x(t)=x_0\exp\left\{{-\erf^{-1}\left(\frac{t}{x_0}\sqrt{\frac{2k}{\pi}}\right)^2}\right\}\]
+substituting the expression for $k$ gives
+\[x(t)=x_0\exp\left\{{-\erf^{-1}\left(\frac{2t}{x_0}\sqrt{\frac{qV_G}{\pi m}}\right)^2}\right\}\]
+TODO: verify ansatz\\
+We know that:
+\[\lim_{x\to\pm1}\erf^{-1}{x}=\pm\infty\]
+Hence to find $x(t)=0$ we solve:
+\[\frac{2t}{x_0}\sqrt{\frac{qV_G}{\pi m}}=1\]
+which yields:
+\[t=\frac{x_0}{2}\sqrt{\frac{\pi m}{qV_G}}\]
+
+
+
+
+
+\subsection{Filament}
+\[R_{total}=R_S+\frac{1}{\frac{1}{R_C}+\frac{1}{R_F}}\]
+\[V_F=V\frac{\frac{1}{\frac{1}{R_C}+\frac{1}{R_F}}
+}{
+R_{total}
+}\]
+\[=\frac{V}{1+R_S\left(\frac{1}{R_C}+\frac{1}{R_F}\right)}\]
+The Joule heating over the filament is:
+\[P_J=\frac{V_F^2}{R_F}\]
+
+\[=\frac{\frac{V^2}{R_F}}{1+2R_S\left(\frac{1}{R_C}+\frac{1}{R_F}\right)+R_S^2\left(\frac{1}{R_C}+\frac{1}{R_F}\right)^2}\]
+
+
+% \[=\frac{V^2}{R_F+2R_S\left(\frac{R_F}{R_C}+1\right)
+% +R_S^2R_F\left(\frac{1}{R_C}+\frac{1}{R_F}\right)^2}\]
+
+% \[=\frac{V^2}{R_F+2R_S\left(\frac{R_F}{R_C}+1\right)
+% +R_S^2\left(\frac{R_F}{R_C^2}+\frac{R_F}{R_C}+\frac{1}{R_F}\right)}\]
+
+if we assume there is not temperature dependent resistance, we find the energy in the filament at time $t$ after the formation of the filament
+\[E_J=P_Jt=\frac{V_F^2}{R_F}t\]
+so
+suppose the filament is destroyed at an energy $E_{\max}$
+\[t=\frac{E_{\max}R_F}{V_F^2}\]
+
+\section{Tunnelling}
+
+\[-\frac{\hbar^2}{2m_e} \frac{{d^2}}{{dx^2}}\Psi(x) + V(x)\Psi(x) = E\Psi(x)\]
+\[V(0)=W_{\text{Mo}}\]
+\[V(w)=eV_{bias}+W_{\text{Mo}}\]
+\[\implies V(x)=\left(\frac{eV_{bias}}{w}\right)x+W_{\text{Mo}}=e\mathcal{E}_{\text{bias}}+W_{\text{Mo}}\]
+
+For the barrier itself:
+\[-\frac{\hbar^2}{2m_e} \frac{{d^2}}{{dx^2}}\Psi(x) + \left[e\mathcal{E}_{\text{bias}}x+W_{\text{Mo}}\right]\Psi(x) = E\Psi(x)\]
+
+\[\frac{{d^2}}{{dx^2}}\Psi(x) = \left[\left(\frac{2m_eeV_{bias}}{\hbar^2w}\right)x+\frac{2m_e(W_{\text{Mo}}-E)}{\hbar^2}\right]\Psi(x)\]
+let $\alpha=\frac{2m_e}{\hbar^2}$
+\[\frac{{d^2}}{{dx^2}}\Psi(x) = \left[\alpha e\mathcal{E}_{\text{bias}}x+\alpha(W_{\text{Mo}}-E)\right]\Psi(x)\]
+
+Solution from WolframAlpha:
+\[\frac{{d^2y}}{{dx^2}}=(mx+c)y\]
+\[m=\alpha e\mathcal{E}_{\text{bias}}\]
+\[c=\alpha(W_{\text{Mo}}-E)\]
+\[k_1\text{Ai}(z)+k_2\text{Bi}(z)\]
+\[z=\frac{mx+c}{m^{2/3}}\]
+
+\[=\left[\left(\alpha e\mathcal{E}_{\text{bias}}\right)x+\alpha(W_{\text{Mo}}-E)\right]
+\cdot\left(\alpha e\mathcal{E}_{\text{bias}}\right)^{-2/3}\]
+
+\[=\left(\alpha e\right)^{1/3}\cdot\left[\mathcal{E}_{\text{bias}}x+\frac{W_{\text{Mo}}-E}{e}\right]
+\cdot\mathcal{E}_{\text{bias}}^{-2/3}\]
+
+$x=0$ gives:
+\[z=\frac{c}{m^{2/3}}\]
+\[=\alpha(W_{\text{Mo}}-E)\cdot\left(\alpha e\mathcal{E}_{\text{bias}}\right)^{-2/3}\]
+
+$x=w$ gives:
+\[\mathcal{E}\]
+
+okay but actually it's just:
+
+
+
+
+\[
+\frac{1}{R_g} = G_g = G_0 \cdot \exp \left(d_g\sqrt{\frac{W_{\text{Mo}} e_m}{2\hbar^2}} \right)
+\]
+
+\[
+\sqrt{\frac{W_{\text{Mo}} e_m}{2\hbar^2}} = 5.52\text{ nm}^{-1} = \frac{1}{0.18 \text{ nm} } = \frac{1}{l_\tau}
+\]
+
+\[
+U=IR\implies I_g=G_gU_g
+\]
+
+\[
+U=V_g
+\]
+
+\[
+F_\text{res}=qZ^*j\rho=qZ^*\mathbb{E}
+\]
+
+\[
+\ddot{x}_\text{res}=\frac{qZ^*\mathbb{E}}{m}=\frac{qZ^*V_g}{mx}
+\]
+
+\[
+\exp\left(\frac{d_0}{l_\tau}\exp\left(-\erf^{-1}\left(
+\frac{2t}{d_0}\sqrt{\frac{qV_g}{\pi m}}
+\right)^2\right)\right)
+% \approx\exp\left(\frac{d_0}{l_\tau}\left(1-x^2\right)\right)
+% \approx x^2(1-e^{d_0/l_\tau}) + e^{d_0/l_\tau}
+\]
+\end{document}
+
