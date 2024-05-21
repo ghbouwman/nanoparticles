@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-wd=$(pwd)
+WD=$(pwd)
+PYTHON=python3
 
-python -m venv wd
+$PYTHON -m venv $WD
 
 PIP=pip3
 
