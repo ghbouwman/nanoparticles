@@ -7,4 +7,4 @@ $PYTHON -m venv $WD
 
 PIP=pip3
 
-$wd$PIP install matplotlib 
+$($wd$PIP install matplotlib)
