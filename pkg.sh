@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+wd=$(pwd)
+
+python -m venv wd
+
 PIP=pip3
 
-$PIP install matplotlib
+$wd$PIP install matplotlib 
