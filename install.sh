@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-pip install --user -r requirements.txt
+PIP=pip3
+
+$PIP install --user -r requirements.txt
