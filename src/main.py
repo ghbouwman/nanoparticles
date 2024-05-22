@@ -15,8 +15,8 @@ def main():
 
     D = np.linspace(-physics.PARTICLE_DIAMETER_MEAN, physics.MAX_DISTANCE, 1000)
     R = physics.resistance(D, 2)
-    # plt.plot(D, R)
-    # plt.show()
+    plt.plot(D, R)
+    plt.show()
 
     print("Initialising substrate...")
     
