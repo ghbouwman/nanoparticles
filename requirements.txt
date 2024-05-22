@@ -3,7 +3,6 @@ fonttools
 kiwisolver
 matplotlib
 numpy
-opencv-python
 packaging
 pillow
 pyparsing
@@ -11,3 +10,4 @@ python-dateutil
 scipy
 six
 spicepy
+opencv-python
