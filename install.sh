@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-PIP=pip3
-
-$PIP install --user -r requirements.txt
+python3 -m venv npvenv
+source npvenv/bin/activate
+pip install -r requirements.txt

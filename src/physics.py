@@ -31,6 +31,8 @@ WORK_FUNCTION_MO = 7.44e-19 # 6.985~7.931; GM: 7.44, 4.65 eV
 SCHRODINGER_CONSTANT = 2*ELECTRON_MASS / HBAR**2
 TUNNELING_SCALE = 1 / np.sqrt(SCHRODINGER_CONSTANT*WORK_FUNCTION_MO)
 
+MAX_RESISTANCE = 1e15
+
 assert MAX_DISTANCE < SUBSTRATE_SIZE
 
 print(TUNNELING_SCALE)
@@ -54,7 +56,9 @@ def resistance(distance, sum_of_radii):
 
     seperation_resistance = is_seperated * RESISTANCE_QUANTUM*np.exp(2*distance.astype(np.float32)/TUNNELING_SCALE)
 
-    return overlap_resistance + seperation_resistance
+    total_resistance = overlap_resistance + seperation_resistance
+
+    return total_resistance * (total_resistance <= MAX_RESISTANCE) + MAX_RESISTANCE * (total_resistance > MAX_RESISTANCE)
 
     # return TOUCHING_RESISTANCE*np.exp(distance.astype(np.float32)*EXPONENTIAL_DECAY_CONSTANT)
 
