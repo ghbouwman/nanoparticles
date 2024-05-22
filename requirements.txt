@@ -10,3 +10,4 @@ python-dateutil
 scipy
 six
 spicepy
+opencv-python
