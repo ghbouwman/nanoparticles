@@ -2,4 +2,4 @@
 
 python3 -m venv npvenv
 source npvenv/bin/activate
-pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
