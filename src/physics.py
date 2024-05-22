@@ -35,6 +35,14 @@ assert MAX_DISTANCE < SUBSTRATE_SIZE
 
 print(TUNNELING_SCALE)
 
+def branchless_min(a, b):
+    
+    return a * (a <= b) + b * (b < a)
+
+def branchless_max(a, b):
+    
+    return a * (a >= b) + b * (b > a)
+
 def resistance(distance, sum_of_radii):
 
     is_overlapping = distance < 0
