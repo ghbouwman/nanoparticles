@@ -13,7 +13,7 @@ RESISTIVITY = 53.4e-9 # Resistivity of the material
 MATERIAL_CHARGE_DENSITY = 1e-3
 BREAKAWAY_ENERGY = 6.4e-16
 BREAKAWAY_ENERGY *= 30
-MAX_DISTANCE = 5e-9
+MAX_DISTANCE = 10e-9 # Important for making sure we don't get a singular matrix.
 
 ELEMENTARY_CHARGE = 1.6e-19
 PLANCK_CONSTANT = 6.626e-34
