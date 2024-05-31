@@ -60,6 +60,8 @@ def resistance(distance, sum_of_radii):
     overlap_resistance = is_overlapping * RESISTANCE_QUANTUM
 
     seperation_resistance = is_seperated * RESISTANCE_QUANTUM*np.exp(2*distance.astype(np.float32)/TUNNELING_SCALE)
+    
+    np.nan_to_num(seperation_resistance, copy=False, nan=MAX_RESISTANCE, posinf=MAX_RESISTANCE, neginf=None)
 
     total_resistance = overlap_resistance + seperation_resistance
 
