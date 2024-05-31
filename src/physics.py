@@ -35,7 +35,7 @@ BIAS = 2e-3 # 2mV; voltage over the source and drain
 # Simulation parameters
 HIGH_RESISTANCE = 1e15 # very high resistance between the source and drain
 MAX_CURRENT = BIAS / HIGH_RESISTANCE
-MAX_DISTANCE = 4e-9 # Important for making sure we don't get a singular matrix.
+MAX_DISTANCE = 10e-9 # Important for making sure we don't get a singular matrix.
 MAX_RESISTANCE = 1e15
 
 assert MAX_DISTANCE < SUBSTRATE_SIZE

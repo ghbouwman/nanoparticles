@@ -6,7 +6,7 @@ import linalg, physics, netlist, solver, plotting, preprocessing
 from multiprocessing import Process
 import time
 
-PLOTTING = True
+PLOTTING = False
 NETLIST_FILENAME = "resistance_circuit"
 INDEX_MAX = 100
 DELTA_T = 1e-5
