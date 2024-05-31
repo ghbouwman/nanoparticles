@@ -92,7 +92,7 @@ def main():
         system_current[index] = currents[-1]
 
         energies += physics.joule_heating(currents, resistances, distances, true_distances) * DELTA_T
-        distances, velocities = distances - velocities * DELTA_T, velocities + physics.filament_acceleration(distances, velocities, voltages) * DELTA_T
+        distances, velocities = distances - velocities * DELTA_T, velocities + physics.filament_acceleration(distances, voltages) * DELTA_T
         distances, energies = physics.break_filaments(distances, energies, true_distances)
 
 
