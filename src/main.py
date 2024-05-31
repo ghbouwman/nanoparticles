@@ -6,6 +6,7 @@ import linalg, physics, netlist, solver, plotting, preprocessing
 from multiprocessing import Process
 import time
 
+PLOTTING = true
 NETLIST_FILENAME = "resistance_circuit"
 INDEX_MAX = 100
 DELTA_T = 1e-5
@@ -13,16 +14,17 @@ assert INDEX_MAX <= 1000 # GIF converter cannot handle to many images in memory
 
 def main():
 
-    D = np.linspace(-physics.PARTICLE_DIAMETER_MEAN, physics.MAX_DISTANCE, 1000)
-    R = physics.resistance(D, 2)
-    plt.plot(D, R)
-    plt.show()
+    if PLOTTING:
+        D = np.linspace(-physics.PARTICLE_DIAMETER_MEAN, physics.MAX_DISTANCE, 1000)
+        R = physics.resistance(D, 2)
+        plt.plot(D, R)
+        plt.show()
 
     print("Initialising substrate...")
     
     x_positions, y_positions, diameters, cluster_ids = preprocessing.deposit_nanoparticles()
-
-    plotting.plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids)
+    if PLOTTING:
+        plotting.plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids)
 
     print(f"amount of clusters: {1+np.max(cluster_ids):.0f}")
 
@@ -52,6 +54,9 @@ def main():
     # Initalise the filament energies.
     energies = np.zeros(size)
 
+    # Initialise filament velocities.
+    velocities = np.zeros(size)
+
     # Set the initial distances.
     distances = true_distances
 
@@ -78,15 +83,16 @@ def main():
         toc = time.time()
         solve_time += toc-tic
 
-        Process(target=plotting.plot_currents, args=(first_nodes, second_nodes, currents, plotting_centers, plotting_radii, index, t)).start()
-        Process(target=plotting.plot_voltages, args=(first_nodes, second_nodes, voltages, plotting_centers, plotting_radii, index, t)).start()
-        # plotting.plot_currents(first_nodes, second_nodes, currents, plotting_centers, plotting_radii, index, t)
-        # plotting.plot_voltages(first_nodes, second_nodes, voltages, plotting_centers, plotting_radii, index, t)
+        if PLOTTING:
+            Process(target=plotting.plot_currents, args=(first_nodes, second_nodes, currents, plotting_centers, plotting_radii, index, t)).start()
+            Process(target=plotting.plot_voltages, args=(first_nodes, second_nodes, voltages, plotting_centers, plotting_radii, index, t)).start()
+            plotting.plot_currents(first_nodes, second_nodes, currents, plotting_centers, plotting_radii, index, t)
+            plotting.plot_voltages(first_nodes, second_nodes, voltages, plotting_centers, plotting_radii, index, t)
 
         system_current[index] = currents[-1]
 
         energies += physics.joule_heating(currents, resistances, distances, true_distances) * DELTA_T
-        distances -= physics.grow_filaments(distances, voltages) * DELTA_T
+        distances, velocities += -velocities * DELTA_T, physics.filament_acceleration(distances, velocities, voltages) * DELTA_T
         distances, energies = physics.break_filaments(distances, energies, true_distances)
 
 
@@ -97,12 +103,12 @@ def main():
     print("Finished simulation.")
     print(f"Time taken up by solver: {solve_time:.2f} ({100*solve_time/total_time:.1f}%)")
 
-
-    plt.plot(1e3*T, np.abs(system_current))
-    plt.xlabel("Time (ms)")
-    plt.ylabel("Current (A)")
-    plt.savefig("../plots/system_current")
-    plt.close()
+    if PLOTTING:
+        plt.plot(1e3*T, np.abs(system_current))
+        plt.xlabel("Time (ms)")
+        plt.ylabel("Current (A)")
+        plt.savefig("../plots/system_current")
+        plt.close()
 
 # Make sure code only runs when the file is executed as a script.
 if __name__ == "__main__":

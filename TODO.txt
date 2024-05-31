@@ -1,5 +1,6 @@
 get rid of filament timescale
 maybe use k-nearest neighnours for graph generation
 more rigorous understanding of electromigration
-
+use wavelet transform on data
+breakaway energy
 
