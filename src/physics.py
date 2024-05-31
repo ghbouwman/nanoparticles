@@ -75,7 +75,7 @@ def joule_heating(currents, resistances, distances, true_distances):
 
     return (is_filament * power).astype(np.float32)
 
-def filaments_acceleration(distances, voltages):
+def filament_acceleration(distances, voltages):
 
     is_seperated = distances > 0
 
