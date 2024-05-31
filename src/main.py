@@ -6,7 +6,7 @@ import linalg, physics, netlist, solver, plotting, preprocessing
 from multiprocessing import Process
 import time
 
-PLOTTING = true
+PLOTTING = True
 NETLIST_FILENAME = "resistance_circuit"
 INDEX_MAX = 100
 DELTA_T = 1e-5
@@ -92,7 +92,7 @@ def main():
         system_current[index] = currents[-1]
 
         energies += physics.joule_heating(currents, resistances, distances, true_distances) * DELTA_T
-        distances, velocities += -velocities * DELTA_T, physics.filament_acceleration(distances, velocities, voltages) * DELTA_T
+        distances, velocities = distances - velocities * DELTA_T, velocities + physics.filament_acceleration(distances, velocities, voltages) * DELTA_T
         distances, energies = physics.break_filaments(distances, energies, true_distances)
 
 
