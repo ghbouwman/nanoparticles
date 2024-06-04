@@ -2,6 +2,8 @@
 
 import numpy as np
 
+from simulation_settings import *
+
 # Physical constants:
 ELEMENTARY_CHARGE = 1.6e-19
 PLANCK_CONSTANT = 6.626e-34
