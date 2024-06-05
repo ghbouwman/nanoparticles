@@ -8,9 +8,9 @@ import time
 
 from settings import *
 
-
 def main():
 
+    # Show shape of resistance function
     if PLOTTING:
         D = np.linspace(-physics.PARTICLE_DIAMETER_MEAN, physics.MAX_DISTANCE, 1000)
         R = physics.resistance(D, 2)
@@ -20,6 +20,7 @@ def main():
     print("Initialising substrate...")
     
     x_positions, y_positions, diameters, cluster_ids = preprocessing.deposit_nanoparticles()
+
     if PLOTTING:
         plotting.plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids)
 
@@ -61,7 +62,6 @@ def main():
 
     system_current = np.full(INDEX_MAX, np.nan)
 
-
     # Simulation loop
     solve_time = 0
     total_tic = time.time()
@@ -70,7 +70,7 @@ def main():
 
         total_toc = time.time()
         total_time = total_toc - total_tic
-        print(f"real time elapsed: {total_time//3600:.0f}:{total_time//60 % 60:02.0f}:{total_time % 60:02.0f}s --- simulation time: {t:.6f}s ({100*index/INDEX_MAX:.0f}% done)", end='\r')
+        print(f"real time elapsed: {total_time//3600:.0f}:{total_time//60 % 60:02.0f}:{total_time % 60:02.0f}s --- simulation time: {t:.6f}s ({100*index/INDEX_MAX:.1f}% done)", end='\r')
 
         resistances = physics.resistance(distances, sum_of_radii)
         netlist.construct_netlist(resistances, first_nodes, second_nodes, NETLIST_FILENAME)
@@ -95,10 +95,15 @@ def main():
 
     total_toc = time.time()
     total_time = total_toc - total_tic
-
-    print(f"real time elapsed: {total_time:.1f}s --- simulation time: {t:.6f}s ({100*index/INDEX_MAX:.0f}% done)")
+    
+    print(80 * ' ', end='\n')
+    print(f"real time elapsed: {total_time:.1f}s --- simulation time: {t:.6f}s (100% done)")
     print("Finished simulation.")
     print(f"Time taken up by solver: {solve_time:.2f} ({100*solve_time/total_time:.1f}%)")
+
+    print("System current result:")
+
+    print(system_current)
 
     if PLOTTING:
         plt.plot(1e3*T, np.abs(system_current))
