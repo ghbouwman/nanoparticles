@@ -1,6 +1,10 @@
-get rid of filament timescale
 maybe use k-nearest neighnours for graph generation
-more rigorous understanding of electromigration
+more rigorous understanding of electromigration: electron density
 use wavelet transform on data
 breakaway energy
+what is the temperature at which the experiment takes place?
+get data from Julien
 
+
+for report:
+talk about the solver as a bottleneck and the use of a good first guess from the previous timestep as an improvement

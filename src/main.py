@@ -6,11 +6,8 @@ import linalg, physics, netlist, solver, plotting, preprocessing
 from multiprocessing import Process
 import time
 
-PLOTTING = False
-NETLIST_FILENAME = "resistance_circuit"
-INDEX_MAX = 100
-DELTA_T = 1e-5
-assert INDEX_MAX <= 1000 # GIF converter cannot handle to many images in memory
+from settings import *
+
 
 def main():
 

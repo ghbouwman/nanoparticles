@@ -2,7 +2,8 @@ from physics import SUBSTRATE_SIZE, PARTICLE_DIAMETER_MEAN, PARTICLE_DIAMETER_ST
 
 import numpy as np
 
-MAX_PARTICLES = 5_000
+from settings import MAX_PARTICLES
+
 
 from physics import SUBSTRATE_SIZE
 from plotting import IMAGE_SIZE

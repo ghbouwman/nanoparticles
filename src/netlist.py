@@ -1,4 +1,4 @@
-from physics import BIAS, HIGH_RESISTANCE
+from settings import BIAS, HIGH_RESISTANCE
 
 import numpy as np
 

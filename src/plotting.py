@@ -2,9 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import cv2 as cv
 
-from physics import SUBSTRATE_SIZE
+from settings import SUBSTRATE_SIZE, IMAGE_SIZE
 
-IMAGE_SIZE = 500
 image_nps = np.zeros(shape = (IMAGE_SIZE, IMAGE_SIZE, 3), dtype=np.int32)
 
 def plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids):
