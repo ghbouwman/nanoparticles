@@ -11,17 +11,20 @@ from settings import *
 def main():
 
     # Show shape of resistance function
+    '''
     if PLOTTING:
         D = np.linspace(-physics.PARTICLE_DIAMETER_MEAN, physics.MAX_DISTANCE, 1000)
         R = physics.resistance(D, 2)
         plt.plot(D, R)
         plt.show()
+    '''
 
     print("Initialising substrate...")
     
     x_positions, y_positions, diameters, cluster_ids = preprocessing.deposit_nanoparticles()
 
     if PLOTTING:
+        print("Plotting all these nice colours :)")
         plotting.plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids)
 
     print(f"amount of clusters: {1+np.max(cluster_ids):.0f}")
@@ -65,12 +68,12 @@ def main():
     # Simulation loop
     solve_time = 0
     total_tic = time.time()
-    T = np.linspace(0, INDEX_MAX*DELTA_T, INDEX_MAX)
+    T = np.linspace(0, INDEX_MAX*DELTA_T, num=INDEX_MAX, endpoint=False)
     for index, t in zip(range(INDEX_MAX), T):
 
         total_toc = time.time()
         total_time = total_toc - total_tic
-        print(f"real time elapsed: {total_time//3600:.0f}:{total_time//60 % 60:02.0f}:{total_time % 60:02.0f}s --- simulation time: {t:.6f}s ({100*index/INDEX_MAX:.1f}% done)", end='\r')
+        print(f"real time elapsed: {total_time//3600:.0f}:{total_time//60 % 60:02.0f}:{total_time % 60:02.0f}s ({100*index/INDEX_MAX:.1f}% done)", end='\r')
 
         resistances = physics.resistance(distances, sum_of_radii)
         netlist.construct_netlist(resistances, first_nodes, second_nodes, NETLIST_FILENAME)
@@ -105,12 +108,13 @@ def main():
 
     print(system_current)
 
-    if PLOTTING:
-        plt.plot(1e3*T, np.abs(system_current))
-        plt.xlabel("Time (ms)")
-        plt.ylabel("Current (A)")
-        plt.savefig("../plots/system_current")
-        plt.close()
+    plt.scatter(1e9*T, 1e9*np.abs(system_current), s=2)
+    plt.xlabel("Time (ns)")
+    plt.ylabel("Current (nA)")
+    plt.yscale('log')
+    # plt.savefig("../plots/system_current")
+    # plt.close()
+    plt.show()
 
 # Make sure code only runs when the file is executed as a script.
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ use wavelet transform on data
 breakaway energy
 what is the temperature at which the experiment takes place?
 get data from Julien
-
+put some mkdirs in install.sh
 
 for report:
 talk about the solver as a bottleneck and the use of a good first guess from the previous timestep as an improvement
