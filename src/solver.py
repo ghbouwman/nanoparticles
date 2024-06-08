@@ -4,7 +4,7 @@ import spicepy.netsolve
 def solve_cicuit(filename):
 
     # Import network
-    net = spicepy.netlist.Network(f'{filename}.net')
+    net = spicepy.netlist.Network(filename)
 
     # Solving the circuit
     spicepy.netsolve.net_solve(net)

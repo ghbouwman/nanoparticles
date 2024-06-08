@@ -6,7 +6,7 @@ def construct_netlist(resistances, first_edges, second_edges, filename):
 
     size = resistances.size
 
-    with open(f"../utils/{filename}.net", 'w') as f:
+    with open(filename, 'w') as f:
 
         for resistor_number, (resistance, i, j) in enumerate(zip(resistances, first_edges, second_edges)):
 
