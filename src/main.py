@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 
-import numpy as np
-import matplotlib.pyplot as plt
-import linalg, physics, netlist, solver, plotting, preprocessing, simulate, analysis
+import simulate, analysis
 from multiprocessing import Process
-import time
 
 from settings import *
 
