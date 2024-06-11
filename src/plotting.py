@@ -6,7 +6,7 @@ from settings import SUBSTRATE_SIZE, IMAGE_SIZE
 
 image_nps = np.zeros(shape = (IMAGE_SIZE, IMAGE_SIZE, 3), dtype=np.int32)
 
-def plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids):
+def plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids, run_name):
     '''
     This method plots the nanoparticles paired with colorcoding per
     cluster.
@@ -40,7 +40,7 @@ def plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids):
     img = plt.imshow(image_nps)
     plt.axis('off')
     print("Generating plot...")
-    plt.savefig("../plots/cluster_plot")
+    plt.savefig(f"../plots/{run_name}_clusters.png")
     print("Saved figure.")
     plt.close()
 
@@ -66,7 +66,7 @@ def plot_currents(first_nodes, second_nodes, currents, centers, radii, index, ti
     # Drawing circles
     for center, radius, color in zip(centers, radii, colors):
 
-        color = list(plt.cm.plasma(color))
+        color = list(plt.cm.magma(color))
         for i in range(4):
             color[i] *= 256
 
@@ -105,7 +105,7 @@ def plot_voltages(first_nodes, second_nodes, voltages, centers, radii, index, ti
     # Drawing circles
     for center, radius, color in zip(centers, radii, colors):
 
-        color = list(plt.cm.plasma(color))
+        color = list(plt.cm.magma(color))
         for i in range(4):
             color[i] *= 256
 

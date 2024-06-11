@@ -2,21 +2,20 @@ import numpy as np
 import linalg, physics, netlist, solver, plotting, preprocessing
 from multiprocessing import Process
 import time
-
+from log import Logger
 from settings import *
 
 def simulate(run_name):
 
-    if PRINTING:
-        print("Initialising substrate...")
+    log = Logger(run_name)
+
+    log("Initialising substrate...")
     
     x_positions, y_positions, diameters, cluster_ids = preprocessing.deposit_nanoparticles()
 
-    if PLOTTING:
-        plotting.plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids)
+    plotting.plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids, run_name)
 
-    if PRINTING: 
-        print(f"amount of clusters: {1+np.max(cluster_ids):.0f}")
+    log(f"amount of clusters: {1+np.max(cluster_ids):.0f}")
 
     # Compute the distance between all the centres of the nanoparticles.
     central_distances = linalg.distance_matrix(x_positions, y_positions)
@@ -29,24 +28,17 @@ def simulate(run_name):
     true_distances = preprocessing.add_source_and_drain(true_distances, diameters, x_positions)
 
     # Remove all nodes that are too far away.
-    if PRINTING:
-        print("Extracting nodes...")
+    log("Extracting nodes...")
     true_distances, sum_of_radii, first_nodes, second_nodes = preprocessing.extract_nodes(true_distances, diameters)
 
-    if PRINTING:
-        print("Extracting positions and diameters...")
     x_positions, y_positions, diameters = preprocessing.extract_positions_and_diameters(x_positions, y_positions, diameters, first_nodes, second_nodes)
     
-    if PRINTING:
-        print("Renaming nodes...")
     first_nodes, second_nodes = preprocessing.rename_nodes(first_nodes, second_nodes)
 
     size = true_distances.size
     
-    if PRINTING:
-        print("no. edges:", size)
-        print("no. particles", 1+max(np.max(first_nodes), np.max(second_nodes)))
-        print(first_nodes.size, x_positions.size)
+    log(f"no. edges: {size}")
+    log(f"no. particles {1+max(np.max(first_nodes), np.max(second_nodes))}")
 
     # Initalise values
     energies = np.zeros(size)
@@ -70,16 +62,15 @@ def simulate(run_name):
         total_toc = time.time()
         total_time = total_toc - total_tic
 
-        if PRINTING:
-            print(f"real time elapsed: {total_time//3600:02.0f}:{total_time//60 % 60:02.0f}:{total_time % 60:02.0f}s ({100*index/NR_STEPS:.1f}% done)", end='\r')
+        log(f"real time elapsed: {total_time//3600:02.0f}:{total_time//60 % 60:02.0f}:{total_time % 60:02.0f}s ({100*index/NR_STEPS:.1f}% done)")
 
         # Calculate new resistances.
         resistances = physics.resistance(distances, sum_of_radii)
-        netlist.construct_netlist(resistances, first_nodes, second_nodes, f"../utils/{run_name}.net")
+        netlist.construct_netlist(resistances, first_nodes, second_nodes, f"../output/{run_name}.net")
 
         # Solve for the new voltages and currents. (we also time this step)
         solve_tic = time.time()
-        voltages, currents = solver.solve_cicuit(f"../utils/{run_name}.net")
+        voltages, currents = solver.solve_cicuit(f"../output/{run_name}.net")
         solve_toc = time.time()
         solve_time += solve_toc - solve_tic
 
@@ -105,9 +96,7 @@ def simulate(run_name):
     total_toc = time.time()
     total_time = total_toc - total_tic
    
-    if PRINTING:
-        print(80 * ' ', end='\r')
-        print(f"real time elapsed: {total_time//3600:02.0f}:{total_time//60 % 60:02.0f}:{total_time % 60:02.0f}s (100% done)")
-        print("Finished simulation.")
-        print(f"Time taken up by solver: {solve_time//3600:02.0f}:{solve_time//60 % 60:02.0f}:{solve_time % 60:02.0f}s ({100*solve_time/total_time:.1f}%)")
+    log(f"real time elapsed: {total_time//3600:02.0f}:{total_time//60 % 60:02.0f}:{total_time % 60:02.0f}s (100% done)")
+    log("Finished simulation.")
+    log(f"Time taken up by solver: {solve_time//3600:02.0f}:{solve_time//60 % 60:02.0f}:{solve_time % 60:02.0f}s ({100*solve_time/total_time:.1f}%)")
 

@@ -1,6 +1,6 @@
 # Any files without extention
-*
-!*.*
+# *
+# !*.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
