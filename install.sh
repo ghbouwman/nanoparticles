@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
+mkdir output/figures
+
+# Set up the venv
 python3 -m venv venv
 source venv/bin/activate
 pip install --verbose -r requirements.txt
-echo "NOTA BENE: please run the command 'source venv/bin/activate' before using the program"

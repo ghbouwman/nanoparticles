@@ -40,7 +40,7 @@ def plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids, run
     img = plt.imshow(image_nps)
     plt.axis('off')
     print("Generating plot...")
-    plt.savefig(f"../output/{run_name}_clusters.png")
+    plt.savefig(f"../output/figures/{run_name}_clusters.png")
     print("Saved figure.")
     plt.close()
 
@@ -80,7 +80,7 @@ def plot_currents(first_nodes, second_nodes, currents, centers, radii, index, ti
     plt.clim(0, 5e-6)
     plt.axis('off')
     plt.title(f"t={1e3*time:.3f}ms")
-    plt.savefig(f"../figures/current{index:04}")
+    plt.savefig(f"../output/figures/current{index:04}")
     plt.close()
 
 def plot_voltages(first_nodes, second_nodes, voltages, centers, radii, index, time):
@@ -119,5 +119,5 @@ def plot_voltages(first_nodes, second_nodes, voltages, centers, radii, index, ti
     plt.clim(0, 5e-6)
     plt.axis('off')
     plt.title(f"t={1e3*time:.3f}ms")
-    plt.savefig(f"../figures/voltage{index:04}")
+    plt.savefig(f"../output/figures/voltage{index:04}")
     plt.close()

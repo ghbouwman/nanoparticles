@@ -10,19 +10,13 @@ MAX_RESISTANCE = 1e15 # max resistance allowed in the distance computation
 MAX_PARTICLES = 20_000 # high numbers wil cause large memory to be used
 
 # np.log(np.finfo(np.float32))
-
+NR_RUNS = 1
 NR_STEPS = 100 # Number of iterations in the simulation loop
 DELTA_T = 1e-12 # Simulation timestep
 
 # Plotting
 IMAGE_SIZE = 500
-PLOTTING = False
-if PLOTTING:
-    assert INDEX_MAX <= 1000 # GIF converter cannot handle too many images in memory
-PRINTING = True
-
-# Misc. simulation settings
-NETLIST_FILENAME = "resistance_circuit"
+PLOTTING = True
 
 # Physical constants:
 ELEMENTARY_CHARGE = 1.6e-19
@@ -47,7 +41,7 @@ TUNNELING_SCALE = 1 / sqrt(SCHRODINGER_CONSTANT*WORK_FUNCTION_MO)
 MATERIAL_CHARGE_DENSITY = MO_CHARGE/MO_MASS # 1e8; not sure what to do with this; might need to be an order of 36 higher at most; this would increase the speed at which the filaments form
 
 # Physical parameters.
-SUBSTRATE_SIZE = .1e-6 # width/height of the substrate
+SUBSTRATE_SIZE = .2e-6 # width/height of the substrate
 PARTICLE_DIAMETER_MEAN = 20e-9 # 10 nm
 PARTICLE_DIAMETER_STD = 1e-9 # 1 nm
 BIAS = 2e-3 # 2mV; voltage over the source and drain
