@@ -47,7 +47,7 @@ TUNNELING_SCALE = 1 / sqrt(SCHRODINGER_CONSTANT*WORK_FUNCTION_MO)
 MATERIAL_CHARGE_DENSITY = MO_CHARGE/MO_MASS # 1e8; not sure what to do with this; might need to be an order of 36 higher at most; this would increase the speed at which the filaments form
 
 # Physical parameters.
-SUBSTRATE_SIZE = .2e-6 # width/height of the substrate
+SUBSTRATE_SIZE = .1e-6 # width/height of the substrate
 PARTICLE_DIAMETER_MEAN = 20e-9 # 10 nm
 PARTICLE_DIAMETER_STD = 1e-9 # 1 nm
 BIAS = 2e-3 # 2mV; voltage over the source and drain

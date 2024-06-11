@@ -7,8 +7,8 @@ from settings import *
 
 def main():
 
-    simulate.simulate("run1")
-    analysis.analyse("run1")
+    for i in range(10):
+        Process(target=simulate.simulate, args=(f"run_{i}",)).start()
 
 # Make sure code only runs when the file is executed as a script.
 if __name__ == "__main__":

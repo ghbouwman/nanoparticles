@@ -16,6 +16,6 @@ def analyse(run_name):
 
     plt.scatter(1e9*T, 1e9*I, s=2)
 
-    plt.savefig(f"../output/{run_name}.png")
+    plt.savefig(f"../output/{run_name}_current.png")
     plt.close()
 

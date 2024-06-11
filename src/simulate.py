@@ -1,5 +1,5 @@
 import numpy as np
-import linalg, physics, netlist, solver, plotting, preprocessing
+import linalg, physics, netlist, solver, plotting, preprocessing, analysis
 from multiprocessing import Process
 import time
 from log import Logger
@@ -99,4 +99,6 @@ def simulate(run_name):
     log(f"real time elapsed: {total_time//3600:02.0f}:{total_time//60 % 60:02.0f}:{total_time % 60:02.0f}s (100% done)")
     log("Finished simulation.")
     log(f"Time taken up by solver: {solve_time//3600:02.0f}:{solve_time//60 % 60:02.0f}:{solve_time % 60:02.0f}s ({100*solve_time/total_time:.1f}%)")
+
+    analysis.analyse(run_name)
 
