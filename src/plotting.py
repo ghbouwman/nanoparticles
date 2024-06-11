@@ -40,7 +40,7 @@ def plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids, run
     img = plt.imshow(image_nps)
     plt.axis('off')
     print("Generating plot...")
-    plt.savefig(f"../output/figures/{run_name}_clusters.png")
+    plt.savefig(f"../output/{run_name}_clusters.png")
     print("Saved figure.")
     plt.close()
 
