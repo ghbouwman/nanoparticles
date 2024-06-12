@@ -2,4 +2,4 @@
 
 source venv/bin/activate
 cd src/
-./main.py
+./main.py &> ../output/main_err.txt

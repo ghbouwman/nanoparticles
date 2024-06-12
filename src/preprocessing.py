@@ -126,8 +126,8 @@ def extract_nodes(distances, diameters, run_name):
     iteration = 0
     for (i, j), distance in np.ndenumerate(distances):
 
-        progress = 100 * iteration / distances.size
-        if i % 1000 == 0:
+        if j == 0:    
+            progress = 100 * iteration / distances.size
             log_to_file(f"Extracting nodes: {progress:.1f}%", run_name)
 
         if distance <= MAX_DISTANCE:
@@ -182,7 +182,8 @@ def extract_positions_and_diameters(x_positions, y_positions, diameters, first_n
     for i in range(MAX_PARTICLES):
 
         progress = 100 * i/MAX_PARTICLES
-        log_to_file(f"Extracting positions and diameters: {progress:.1f}%", run_name)
+        if i % 100 == 0: 
+            log_to_file(f"Extracting positions and diameters: {progress:.1f}%", run_name)
 
         for node in nodes:
 
