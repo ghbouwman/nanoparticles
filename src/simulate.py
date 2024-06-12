@@ -61,7 +61,7 @@ def simulate(run_name):
 
         total_toc = time.time()
         total_time = total_toc - total_tic
-        log(f"real time elapsed: {datetime.timedelta(seconds=total_time)} ({100*index/NR_STEPS:.1f}% done) ETA: {datetime.timedelta(seconds=(total_time/(index/NR_STEPS) - total_time))}")
+        log(f"real time elapsed: {datetime.timedelta(seconds=total_time)} ({100*index/NR_STEPS:.1f}% done) ETA: {datetime.timedelta(seconds=(total_time/(max(index, 1)/NR_STEPS) - total_time))}")
 
         # Calculate new resistances.
         resistances = physics.resistance(distances, sum_of_radii)
