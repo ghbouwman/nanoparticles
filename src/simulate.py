@@ -29,11 +29,11 @@ def simulate(run_name):
 
     # Remove all nodes that are too far away.
     log("Extracting nodes...")
-    true_distances, sum_of_radii, first_nodes, second_nodes = preprocessing.extract_nodes(true_distances, diameters)
+    true_distances, sum_of_radii, first_nodes, second_nodes = preprocessing.extract_nodes(true_distances, diameters, run_name)
 
-    x_positions, y_positions, diameters = preprocessing.extract_positions_and_diameters(x_positions, y_positions, diameters, first_nodes, second_nodes)
+    x_positions, y_positions, diameters = preprocessing.extract_positions_and_diameters(x_positions, y_positions, diameters, first_nodes, second_nodes, run_name)
     
-    first_nodes, second_nodes = preprocessing.rename_nodes(first_nodes, second_nodes)
+    first_nodes, second_nodes = preprocessing.rename_nodes(first_nodes, second_nodesm run_name)
 
     size = true_distances.size
     

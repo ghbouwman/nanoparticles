@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2 as cv
+from log import log_to_file
 
 from settings import SUBSTRATE_SIZE, IMAGE_SIZE
 
@@ -39,9 +40,9 @@ def plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids, run
 
     img = plt.imshow(image_nps)
     plt.axis('off')
-    print("Generating plot...")
+    log_to_file("Generating figure.", run_name)
     plt.savefig(f"../output/{run_name}_clusters.png")
-    print("Saved figure.")
+    log_to_file("Saved figure.", run_name)
     plt.close()
 
 def plot_currents(first_nodes, second_nodes, currents, centers, radii, index, time, run_name):

@@ -4,6 +4,7 @@ import numpy as np
 
 from settings import MAX_PARTICLES
 
+from log import log_to_file
 
 from physics import SUBSTRATE_SIZE
 from plotting import IMAGE_SIZE
@@ -112,7 +113,7 @@ def add_source_and_drain(true_distances, diameters, x_positions):
 
     return true_distances
 
-def extract_nodes(distances, diameters):
+def extract_nodes(distances, diameters, run_name):
 
     size = distances.shape[0]
 
@@ -126,7 +127,8 @@ def extract_nodes(distances, diameters):
     for (i, j), distance in np.ndenumerate(distances):
 
         progress = 100 * iteration / distances.size
-        print(f"Extracting nodes: {progress:.0f}%", end='\r')
+        if i % 1000 == 0:
+            log_to_file(f"Extracting nodes: {progress:.1f}%", run_name)
 
         if distance <= MAX_DISTANCE:
 
@@ -164,11 +166,11 @@ def extract_nodes(distances, diameters):
 
     cut = index
 
-    print("Extracting nodes: finished.")
+    log_to_file("Extracting nodes: finished.", run_name)
 
     return edge_value[:cut], radii_value[:cut], first_node[:cut], second_node[:cut]
 
-def extract_positions_and_diameters(x_positions, y_positions, diameters, first_nodes, second_nodes):
+def extract_positions_and_diameters(x_positions, y_positions, diameters, first_nodes, second_nodes, run_name):
 
     nodes = np.hstack([first_nodes, second_nodes])
 
@@ -180,7 +182,7 @@ def extract_positions_and_diameters(x_positions, y_positions, diameters, first_n
     for i in range(MAX_PARTICLES):
 
         progress = 100 * i/MAX_PARTICLES
-        print(f"Extracting positions and diameters: {progress:.0f}%", end='\r')
+        log_to_file(f"Extracting positions and diameters: {progress:.1f}%", run_name)
 
         for node in nodes:
 
@@ -192,7 +194,7 @@ def extract_positions_and_diameters(x_positions, y_positions, diameters, first_n
                 index += 1
                 break
 
-    print("Extracting positions and diameters: finished.")
+    log_to_file("Extracting positions and diameters: finished.", run_name)
 
     a = 0.2 # parameter free to be set; only used for plotting
 
@@ -211,7 +213,7 @@ def extract_positions_and_diameters(x_positions, y_positions, diameters, first_n
     return new_x_positions[:cut], new_y_positions[:cut], new_diameters[:cut]
 
 
-def rename_nodes(first_edges, second_edges):
+def rename_nodes(first_edges, second_edges, run_name):
 
     size = first_edges.size
     
@@ -240,7 +242,7 @@ def rename_nodes(first_edges, second_edges):
 
         progress = 100*i/max_index
 
-        print(f"Renaming edges: {progress:.0f}%", end='\r')
+        log_to_file(f"Renaming edges: {progress:.1f}%", run_name)
 
         if np.max(first_edges) < i and np.max(second_edges) < i:
 
@@ -254,7 +256,7 @@ def rename_nodes(first_edges, second_edges):
             first_edges[first_edges > i] -= 1
             second_edges[second_edges > i] -= 1
 
-    print(f"Renaming edges: finished.")
+    log_to_file(f"Renaming edges: finished.", run_name)
 
     return first_edges, second_edges
 
