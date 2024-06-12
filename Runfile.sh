@@ -2,4 +2,4 @@
 
 source venv/bin/activate
 cd src/
-./main.py &> ../output/main_output.txt
+./main.py
