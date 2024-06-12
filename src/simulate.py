@@ -33,7 +33,7 @@ def simulate(run_name):
 
     x_positions, y_positions, diameters = preprocessing.extract_positions_and_diameters(x_positions, y_positions, diameters, first_nodes, second_nodes, run_name)
     
-    first_nodes, second_nodes = preprocessing.rename_nodes(first_nodes, second_nodesm run_name)
+    first_nodes, second_nodes = preprocessing.rename_nodes(first_nodes, second_nodes, run_name)
 
     size = true_distances.size
     
