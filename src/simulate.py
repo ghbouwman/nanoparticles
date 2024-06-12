@@ -75,10 +75,10 @@ def simulate(run_name):
         solve_time += solve_toc - solve_tic
 
         if PLOTTING:
-            Process(target=plotting.plot_currents, args=(first_nodes, second_nodes, currents, plotting_centers, plotting_radii, index, t)).start()
-            Process(target=plotting.plot_voltages, args=(first_nodes, second_nodes, voltages, plotting_centers, plotting_radii, index, t)).start()
-            plotting.plot_currents(first_nodes, second_nodes, currents, plotting_centers, plotting_radii, index, t)
-            plotting.plot_voltages(first_nodes, second_nodes, voltages, plotting_centers, plotting_radii, index, t)
+            Process(target=plotting.plot_currents, args=(first_nodes, second_nodes, currents, plotting_centers, plotting_radii, index, t, run_name)).start()
+            Process(target=plotting.plot_voltages, args=(first_nodes, second_nodes, voltages, plotting_centers, plotting_radii, index, t, run_name)).start()
+            # plotting.plot_currents(first_nodes, second_nodes, currents, plotting_centers, plotting_radii, index, t)
+            # plotting.plot_voltages(first_nodes, second_nodes, voltages, plotting_centers, plotting_radii, index, t)
 
         # Save the system current to the .csv
         with open(f"../output/{run_name}.csv", 'a') as csv:
