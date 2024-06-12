@@ -1,7 +1,7 @@
 import numpy as np
 import linalg, physics, netlist, solver, plotting, preprocessing, analysis
 from multiprocessing import Process
-import time
+import time, datetime
 from log import Logger
 from settings import *
 
