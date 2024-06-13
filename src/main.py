@@ -7,7 +7,7 @@ from settings import *
 
 def main():
 
-    Process(target=simulate.simulate, args=(f"run1",)).start()
+    simulate.simulate("run1")
 
 # Make sure code only runs when the file is executed as a script.
 if __name__ == "__main__":
