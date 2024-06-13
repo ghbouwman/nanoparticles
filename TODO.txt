@@ -3,10 +3,8 @@ use wavelet transform on data
 breakaway energy
 what is the temperature at which the experiment takes place?
 get data from Julien
-put some mkdirs in install.sh
 add animation
 
-add molar mass of molybdenum
 what are the charge and effective valence of Mo ions?
 
 for report:
