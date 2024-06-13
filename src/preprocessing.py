@@ -126,7 +126,7 @@ def extract_nodes(distances, diameters, run_name):
     iteration = 0
     for (i, j), distance in np.ndenumerate(distances):
 
-        if i % 100 == 0 and j == 0   
+        if i % 100 == 0 and j == 0:
             progress = 100 * iteration / distances.size
             log_to_file(f"Extracting nodes: {progress:.1f}%", run_name)
 
