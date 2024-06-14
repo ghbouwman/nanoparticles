@@ -1,16 +1,12 @@
 #!/usr/bin/env python
 
-import simulate, analysis
-from multiprocessing import Process
-
-from settings import *
+import simulate
+# from multiprocessing import Process
+from index import RUN_NAME
 
 def main():
 
-    for i in range(NR_RUNS):
-        Process(target=simulate.simulate, args=(f"run{i}",)).start()
-
-    print("Started all runs.")
+    simulate.simulate(RUN_NAME)
 
 # Make sure code only runs when the file is executed as a script.
 if __name__ == "__main__":
