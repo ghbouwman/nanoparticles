@@ -9,8 +9,6 @@ MAX_DISTANCE = 10e-9 # Important for making sure we don't get a singular matrix.
 MAX_RESISTANCE = 1e15 # max resistance allowed in the distance computation
 MAX_PARTICLES = 20_000 # high numbers wil cause large memory to be used
 
-# np.log(np.finfo(np.float32))
-NR_RUNS = 10
 NR_STEPS = 1000 # Number of iterations in the simulation loop
 DELTA_T = 1e-12 # Simulation timestep
 
