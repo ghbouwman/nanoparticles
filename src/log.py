@@ -13,6 +13,6 @@ class Logger:
             f.write(f"[{now}] {text}\n")
 
 def log_to_file(text, run_name):
-    with open(f"../output/{run_name}_log.txt", 'a') as f:
+    with open(f"../output/{run_name}.log", 'a') as f:
         now = datetime.datetime.now()
         f.write(f"[{now}] {text}\n")
