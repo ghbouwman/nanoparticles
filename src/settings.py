@@ -16,7 +16,7 @@ DELTA_T = 1e-12 # Simulation timestep
 
 # Plotting
 IMAGE_SIZE = 1000
-PLOTTING = False
+PLOTTING = True
 
 # Physical constants:
 ELEMENTARY_CHARGE = 1.6e-19
