@@ -2,11 +2,13 @@
 
 import simulate
 # from multiprocessing import Process
-from index import RUN_NAME
 
 def main():
 
-    simulate.simulate(RUN_NAME)
+    with open("../output/index.txt") as f:
+        run_name = f.readline()
+    
+    simulate.simulate(run_name)
 
 # Make sure code only runs when the file is executed as a script.
 if __name__ == "__main__":
