@@ -3,7 +3,7 @@ import datetime
 class Logger:
     
     def __init__(self, run_name):
-        self.logfile = f"../output/{run_name}_log.txt"
+        self.logfile = f"../output/{run_name}.log"
         with open(self.logfile, 'w') as f:
             f.write(f"begin of logfile for {run_name}\n")
 
