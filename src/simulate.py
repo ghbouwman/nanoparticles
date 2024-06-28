@@ -68,7 +68,7 @@ def simulate(run_name):
         log(f"real time elapsed: {datetime.timedelta(seconds=total_time)} ({100*index/NR_STEPS:.1f}% done) ETA: {datetime.timedelta(seconds=(total_time/(max(index, 1)/NR_STEPS) - total_time))}")
 
         # Calculate new resistances.
-        resistances = physics.resistance(distances, sum_of_radii)
+        resistances = physics.resistance(distances, sum_of_radii, true_distances)
         netlist.construct_netlist(resistances, first_nodes, second_nodes, f"../output/{run_name}.net")
 
         # Solve for the new voltages and currents. (we also time this step)
@@ -83,7 +83,7 @@ def simulate(run_name):
             # plotting.plot_currents(first_nodes, second_nodes, currents, plotting_centers, plotting_radii, index, t)
             # plotting.plot_voltages(first_nodes, second_nodes, voltages, plotting_centers, plotting_radii, index, t)
 
-        # Save the system current to the .csv
+        # Append the system current to the .csv
         with open(f"../output/{run_name}.csv", 'a') as csv:
             csv.write(f"{t},{currents[-1]}\n")
 

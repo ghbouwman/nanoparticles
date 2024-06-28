@@ -3,19 +3,6 @@ from numpy import sqrt
 
 # All numbers are in SI unless mentioned otherwise
 
-# Simulation parameters
-HIGH_RESISTANCE = 1e30 # very high resistance between the source and drain
-MAX_DISTANCE = 10e-9 # Important for making sure we don't get a singular matrix.
-MAX_RESISTANCE = 1e15 # max resistance allowed in the distance computation
-MAX_PARTICLES = 20_000 # high numbers wil cause large memory to be used
-
-NR_STEPS = 1_00 # Number of iterations in the simulation loop
-DELTA_T = 1e-6 # Simulation timestep
-
-# Plotting
-IMAGE_SIZE = 200
-PLOTTING = False
-
 # Physical constants:
 ELEMENTARY_CHARGE = 1.6e-19
 PLANCK_CONSTANT = 6.626e-34
@@ -25,6 +12,19 @@ RESISTANCE_QUANTUM = 1/CONDUCTANCE_QUANTUM
 DALTON = 1.66e-27
 ELECTRON_MASS = 9.11e-31
 SCHRODINGER_CONSTANT = 2*ELECTRON_MASS / HBAR**2
+
+# Simulation parameters
+NR_STEPS = 100 # Number of iterations in the simulation loop
+DELTA_T = 22e-3 # Simulation timestep
+HIGH_RESISTANCE = 1e30 # very high resistance between the source and drain
+MAX_DISTANCE = 10e-9 # Important for making sure we don't get a singular matrix.
+MAX_RESISTANCE = 1e15 # max resistance allowed in the distance computation
+MAX_PARTICLES = 20_000 # high numbers wil cause large memory to be used
+MIN_RESISTANCE = 1e-9 / CONDUCTANCE_QUANTUM
+
+# Plotting
+IMAGE_SIZE = 500
+PLOTTING = True
 
 # Material constants for molybdenum:
 MO_MASS = 95.95 * DALTON
@@ -36,9 +36,9 @@ MATERIAL_CHARGE_DENSITY = MO_CHARGE/MO_MASS # 1e8; not sure what to do with this
 
 # Physical parameters.
 SUBSTRATE_SIZE = 1e-6 # width/height of the substrate
-PARTICLE_DIAMETER_MEAN = 20e-9 # 10 nm
-PARTICLE_DIAMETER_STD = 1e-9 # 1 nm
-BIAS = 2e-3 # 2mV; voltage over the source and drain
+PARTICLE_DIAMETER_MEAN = 20e-9 #
+PARTICLE_DIAMETER_STD = 1e-9 #
+BIAS = 10e-3 # voltage over the source and drain
 
 MAX_CURRENT = BIAS / HIGH_RESISTANCE
 assert MAX_DISTANCE < SUBSTRATE_SIZE

@@ -20,6 +20,10 @@ def analyse(run_name):
     plt.xlabel("Time (ns)")
     plt.ylabel("Conductance (m$G_0$)")
     # plt.yscale('log')
+
+    # cut outliers
+    normal_vals = (N < 1e-4) 
+    N = N * normal_vals
     
     plt.scatter(1e9*T, 1e3*N, s=2)
     plt.savefig(f"../results/final/{run_name}_sys.png")
@@ -41,7 +45,8 @@ def analyse(run_name):
 
     val = 400
     res = .1
-    bins = np.linspace(-val, val, round(2*val/res))
+    # bins = np.linspace(-val, val, round(2*val/res))
+    bins = 15
     densities, edges, _ = plt.hist(1e6*dN, bins=bins, density=True)
     midpoints = (edges[1:] + edges[:-1])/2
     pseudo_voigt = lambda x, sigma, gamma, a: a*np.exp(-(x/(sqrt(2)*sigma))**2)/(sigma*sqrt(2*np.pi)) + (1-a)/(np.pi*gamma*(1+(x/gamma)**2))
