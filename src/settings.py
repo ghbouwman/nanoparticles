@@ -9,12 +9,12 @@ MAX_DISTANCE = 10e-9 # Important for making sure we don't get a singular matrix.
 MAX_RESISTANCE = 1e15 # max resistance allowed in the distance computation
 MAX_PARTICLES = 20_000 # high numbers wil cause large memory to be used
 
-NR_STEPS = 1000 # Number of iterations in the simulation loop
-DELTA_T = 1e-12 # Simulation timestep
+NR_STEPS = 1_00 # Number of iterations in the simulation loop
+DELTA_T = 1e-6 # Simulation timestep
 
 # Plotting
-IMAGE_SIZE = 1000
-PLOTTING = True
+IMAGE_SIZE = 200
+PLOTTING = False
 
 # Physical constants:
 ELEMENTARY_CHARGE = 1.6e-19
@@ -35,7 +35,7 @@ TUNNELING_SCALE = 1 / sqrt(SCHRODINGER_CONSTANT*WORK_FUNCTION_MO)
 MATERIAL_CHARGE_DENSITY = MO_CHARGE/MO_MASS # 1e8; not sure what to do with this; might need to be an order of 36 higher at most; this would increase the speed at which the filaments form
 
 # Physical parameters.
-SUBSTRATE_SIZE = 2e-6 # width/height of the substrate
+SUBSTRATE_SIZE = 1e-6 # width/height of the substrate
 PARTICLE_DIAMETER_MEAN = 20e-9 # 10 nm
 PARTICLE_DIAMETER_STD = 1e-9 # 1 nm
 BIAS = 2e-3 # 2mV; voltage over the source and drain

@@ -93,7 +93,7 @@ def deposit_nanoparticles():
         cluster_id += 1
 
     # Remove empty rows
-    cut = index
+    cut = index - 1
     
     return x_positions[:cut], y_positions[:cut], diameters[:cut], cluster_ids[:cut]
     

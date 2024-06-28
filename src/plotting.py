@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import cv2 as cv
 from log import log_to_file
 
-from settings import SUBSTRATE_SIZE, IMAGE_SIZE
+from settings import SUBSTRATE_SIZE, IMAGE_SIZE, MAX_DISTANCE
 
 image_nps = np.zeros(shape = (IMAGE_SIZE, IMAGE_SIZE, 3), dtype=np.int32)
 
@@ -44,6 +44,13 @@ def plotting_nanoparticles(x_positions, y_positions, diameters, cluster_ids, run
     plt.savefig(f"../output/{run_name}_clusters.png")
     log_to_file("Saved figure.", run_name)
     plt.close()
+
+def plot_distances(d, run_name):
+
+    plt.hist(d.flatten(), bins=50)
+    plt.savefig(f"../output/{run_name}_distances.png")
+    plt.close()
+    
 
 def plot_currents(first_nodes, second_nodes, currents, centers, radii, index, time, run_name):
     

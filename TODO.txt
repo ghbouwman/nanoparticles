@@ -6,6 +6,7 @@ get data from Julien
 add animation
 
 what are the charge and effective valence of Mo ions?
+assume q=Z_eff
 
 for report:
 talk about the solver as a bottleneck and the use of a good first guess from the previous timestep as an improvement

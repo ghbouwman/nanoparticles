@@ -6,8 +6,7 @@ import simulate
 def main():
 
     with open("../output/index.txt") as f:
-        run_name = str(f.readline())
-        print(run_name)
+        run_name = f.readline().rstrip()
     
     simulate.simulate(run_name)
 

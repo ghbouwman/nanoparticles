@@ -27,6 +27,10 @@ def simulate(run_name):
     # Append the distances from both the electrodes
     true_distances = preprocessing.add_source_and_drain(true_distances, diameters, x_positions)
 
+    log(f"{true_distances}")
+
+    plotting.plot_distances(true_distances, run_name)
+
     # Remove all nodes that are too far away.
     log("Extracting nodes...")
     true_distances, sum_of_radii, first_nodes, second_nodes = preprocessing.extract_nodes(true_distances, diameters, run_name)
