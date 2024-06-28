@@ -7,7 +7,9 @@ from scipy import optimize
 
 def analyse(run_name):
 
-    df = pd.read_csv(f"../results/final/{run_name}.csv")
+    path = "output"
+
+    df = pd.read_csv(f"../{path}/{run_name}.csv")
 
     cut = 0
     T = np.array(df["Time (s)"][cut:])
@@ -17,16 +19,16 @@ def analyse(run_name):
     G = I / BIAS
     N = G / CONDUCTANCE_QUANTUM
 
-    plt.xlabel("Time (ns)")
-    plt.ylabel("Conductance (m$G_0$)")
+    plt.xlabel("Time (s)")
+    plt.ylabel("Conductance ($G_0$)")
     # plt.yscale('log')
 
     # cut outliers
-    normal_vals = (N < 1e-4) 
-    N = N * normal_vals
+    # normal_vals = (N < 1e-4) 
+    # N = N * normal_vals
     
-    plt.scatter(1e9*T, 1e3*N, s=2)
-    plt.savefig(f"../results/final/{run_name}_sys.png")
+    plt.scatter(T, N, s=2)
+    plt.savefig(f"../{path}/{run_name}_sys.png")
     plt.close()
 
     plt.clf()
@@ -36,35 +38,47 @@ def analyse(run_name):
     dN = dG / CONDUCTANCE_QUANTUM
     T_half = (T[1:] + T[:-1])/2
     
-    plt.xlabel("Time (ns)")
-    plt.ylabel("Conductance Change ($\mu G_0$)")
-    plt.scatter(1e9*T_half, 1e6*dN, s=2)
+    plt.xlabel("Time (s)")
+    plt.ylabel("Conductance Change ($G_0$)")
+    plt.scatter(T_half, dN, s=2)
     # plt.ylim(-2, 2)
-    plt.savefig(f"../results/final/{run_name}_sys_change.png")
+    plt.savefig(f"../{path}/{run_name}_sys_change.png")
     plt.close()
 
     val = 400
-    res = .1
-    # bins = np.linspace(-val, val, round(2*val/res))
-    bins = 15
-    densities, edges, _ = plt.hist(1e6*dN, bins=bins, density=True)
+    res = 5
+    bins = np.linspace(-val, val, round(2*val/res))
+    bins = 200
+    densities, edges, _ = plt.hist(dN, bins=bins, density=True)
     midpoints = (edges[1:] + edges[:-1])/2
-    pseudo_voigt = lambda x, sigma, gamma, a: a*np.exp(-(x/(sqrt(2)*sigma))**2)/(sigma*sqrt(2*np.pi)) + (1-a)/(np.pi*gamma*(1+(x/gamma)**2))
+    pseudo_voigt = lambda x, mu, sigma, gamma, a: a*np.exp(-((x-mu)/(sqrt(2)*sigma))**2)/(sigma*sqrt(2*np.pi)) + (1-a)/(np.pi*gamma*(1+((x-mu)/gamma)**2))
     max_val_gauss = 1e-2
     max_val_cauchy = 1e-2
     a_guess = .8
-    popt, pcov, *_ = optimize.curve_fit(pseudo_voigt, midpoints, densities, p0=[1/(max_val_gauss*np.sqrt(2*np.pi)), 1/(max_val_cauchy*np.pi), a_guess])
-    print(popt, pcov)
+    popt, pcov, *_ = optimize.curve_fit(pseudo_voigt, midpoints, densities,
+                                        p0=[0, 1/(max_val_gauss*np.sqrt(2*np.pi)), 1/(max_val_cauchy*np.pi), a_guess],
+                                        bounds=([-np.inf, 0, 0, 0], [np.inf, np.inf, np.inf, 1]),
+                                        maxfev=10_000)
+    perr = np.sqrt(np.diag(pcov))
     f = lambda x: pseudo_voigt(x, *popt)
-    lim = 200
+    lim = max(-min(dN), max(dN))
     X = np.linspace(-lim, lim, 1_000)
     Y = f(X)
     plt.scatter(X, Y, s=.5, c='orange')
-    plt.xlabel("Conductance Change ($\mu G_0$)")
+    plt.xlabel("Conductance Change ($G_0$)")
     plt.xlim(-lim, lim)
     plt.ylabel("Empirical Probability Density")
-    plt.savefig(f"../results/final/{run_name}_hist.png")
+    plt.savefig(f"../{path}/{run_name}_hist.png")
     plt.close()
+
+    return (popt, perr)
+
+def analyse_set():
+
+    mus = []
+    sigmas = []
+    gammas = []
+    ayys = []
 
 def analyse_julien(run_name, val=1000, res=3):
 

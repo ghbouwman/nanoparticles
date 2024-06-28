@@ -2,8 +2,6 @@
   seperation_resistance = RESISTANCE_QUANTUM * np.exp(2*distance.astype(np.float32)/TUNNELING_SCALE) * filament_unformed * untouching_particle
 /home/hans/University/nanoparticles/src/physics.py:41: RuntimeWarning: overflow encountered in multiply
   seperation_resistance = RESISTANCE_QUANTUM * np.exp(2*distance.astype(np.float32)/TUNNELING_SCALE) * filament_unformed * untouching_particle
-/home/hans/University/nanoparticles/src/physics.py:41: RuntimeWarning: overflow encountered in divide
-  seperation_resistance = RESISTANCE_QUANTUM * np.exp(2*distance.astype(np.float32)/TUNNELING_SCALE) * filament_unformed * untouching_particle
 Traceback (most recent call last):
   File "/home/hans/University/nanoparticles/src/./main.py", line 15, in <module>
     main()
@@ -29,4 +27,4 @@ Traceback (most recent call last):
   File "/home/hans/University/nanoparticles/venv/lib/python3.12/site-packages/pandas/io/common.py", line 873, in get_handle
     handle = open(
              ^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: '../results/final/22ms_but_plots.csv'
+FileNotFoundError: [Errno 2] No such file or directory: '../results/final/fast_100pico2.csv'

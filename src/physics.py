@@ -42,7 +42,7 @@ def resistance(distance, sum_of_radii, true_distances):
     np.nan_to_num(seperation_resistance, copy=False, nan=MAX_RESISTANCE, posinf=MAX_RESISTANCE, neginf=None)
 
     # For touching nanoparticles:
-    touching_resistance = MIN_RESISTANCE * touching_particle
+    touching_resistance = touching_particle / TOUCHING_CONDUCTIVITY
 
     total_resistance = overlap_resistance + seperation_resistance +  touching_resistance
 
@@ -62,7 +62,7 @@ def filament_acceleration(distances, voltages):
 
     is_seperated = distances > 0
 
-    field_strength = voltages / distances
+    field_strength = np.abs(voltages) / distances
     acceleration = field_strength * MATERIAL_CHARGE_DENSITY
 
     return (is_seperated * acceleration).astype(np.float32)
