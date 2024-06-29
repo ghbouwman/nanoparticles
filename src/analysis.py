@@ -5,13 +5,22 @@ from scipy import stats
 from settings import *
 from scipy import optimize
 
+def autocorr(x):
+    
+    result = np.correlate(x, x, mode='full')
+    return result[result.size//2:]
+
+def acf(x, length):
+
+    return np.array([1] + [np.corrcoef(x[:-i], x[i:])[0,1] for i in range(1, length)])
+
 def analyse(run_name):
 
     path = "output"
 
     df = pd.read_csv(f"../{path}/{run_name}.csv")
 
-    cut = 0
+    cut = 1
     T = np.array(df["Time (s)"][cut:])
     I = np.array(np.abs(df["Current (A)"])[cut:])
     # I = running_mode(I)
@@ -21,17 +30,29 @@ def analyse(run_name):
 
     plt.xlabel("Time (s)")
     plt.ylabel("Conductance ($G_0$)")
-    # plt.yscale('log')
 
     # cut outliers
     # normal_vals = (N < 1e-4) 
     # N = N * normal_vals
     
     plt.scatter(T, N, s=2)
+    # plt.xlim(0.6e-9, 0.7e-9)
     plt.savefig(f"../{path}/{run_name}_sys.png")
     plt.close()
 
-    plt.clf()
+    l = len(N)
+    A = autocorr(N)
+    A = acf(N, l)
+    # A = acf(np.sin(np.linspace(0, 20, len(A))))
+    print(A)
+    plt.scatter(T[:l],A)
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.ylim(1e-3, 1)
+    plt.savefig(f"../{path}/{run_name}_autocorr.png")
+    plt.close()
+
+
     # delta G
     
     dG = G[1:] - G[:-1]
@@ -41,8 +62,19 @@ def analyse(run_name):
     plt.xlabel("Time (s)")
     plt.ylabel("Conductance Change ($G_0$)")
     plt.scatter(T_half, dN, s=2)
-    # plt.ylim(-2, 2)
     plt.savefig(f"../{path}/{run_name}_sys_change.png")
+    plt.close()
+
+    # delta delta G
+    
+    ddG = dG[1:] - dG[:-1]
+    ddN = ddG / CONDUCTANCE_QUANTUM
+    T_half_half = (T_half[1:] + T_half[:-1])/2
+    
+    plt.xlabel("Time (s)")
+    plt.ylabel("Conductance Second Difference ($G_0$)")
+    plt.scatter(T_half_half, ddN, s=2)
+    plt.savefig(f"../{path}/{run_name}_sys_change_change.png")
     plt.close()
 
     val = 400

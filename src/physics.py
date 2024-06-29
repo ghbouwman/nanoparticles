@@ -63,7 +63,7 @@ def filament_acceleration(distances, voltages):
     is_seperated = distances > 0
 
     field_strength = np.abs(voltages) / distances
-    acceleration = field_strength * MATERIAL_CHARGE_DENSITY
+    acceleration = field_strength * MO_EFFECTIVE_VALENCE * MO_CHARGE / MO_MASS
 
     return (is_seperated * acceleration).astype(np.float32)
 

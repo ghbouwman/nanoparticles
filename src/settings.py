@@ -16,7 +16,7 @@ SCHRODINGER_CONSTANT = 2*ELECTRON_MASS / HBAR**2
 
 # Simulation parameters
 NR_STEPS = 10_000 # Number of iterations in the simulation loop
-DELTA_T = 100e-12 # Simulation timestep
+DELTA_T = 1e-12 # Simulation timestep
 HIGH_RESISTANCE = 1e30 # very high resistance between the source and drain
 MAX_DISTANCE = 10e-9 # Important for making sure we don't get a singular matrix.
 MAX_RESISTANCE = 1e15 # max resistance allowed in the distance computation
@@ -29,10 +29,11 @@ PLOTTING = False
 # Material constants for molybdenum:
 MO_MASS = 95.95 * DALTON
 MO_CHARGE = 1 * ELEMENTARY_CHARGE
-BREAKAWAY_ENERGY = 6.4e-16
+MO_EFFECTIVE_VALENCE = 1
+BREAKAWAY_ENERGY = 6.742e-19
 WORK_FUNCTION_MO = 7.44e-19 # 6.985~7.931; GM: 7.44, 4.65 eV
 TUNNELING_SCALE = 1 / sqrt(SCHRODINGER_CONSTANT*WORK_FUNCTION_MO)
-MATERIAL_CHARGE_DENSITY = MO_CHARGE/MO_MASS # 1e8; not sure what to do with this; might need to be an order of 36 higher at most; this would increase the speed at which the filaments form
+# MATERIAL_CHARGE_DENSITY = MO_CHARGE/MO_MASS # 1e8; not sure what to do with this; might need to be an order of 36 higher at most; this would increase the speed at which the filaments form
 MO_RADIUS = 0.15e-9
 
 # Physical parameters.
