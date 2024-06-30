@@ -103,5 +103,5 @@ def simulate(run_name):
     log("Finished simulation.")
     log(f"Time taken up by solver: {solve_time//3600:02.0f}:{solve_time//60 % 60:02.0f}:{solve_time % 60:02.0f}s ({100*solve_time/total_time:.1f}%)")
 
-    analysis.analyse(run_name)
+    analysis.analyse2(run_name)
 

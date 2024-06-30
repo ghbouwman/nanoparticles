@@ -2,29 +2,14 @@
   seperation_resistance = RESISTANCE_QUANTUM * np.exp(2*distance.astype(np.float32)/TUNNELING_SCALE) * filament_unformed * untouching_particle
 /home/hans/University/nanoparticles/src/physics.py:41: RuntimeWarning: overflow encountered in multiply
   seperation_resistance = RESISTANCE_QUANTUM * np.exp(2*distance.astype(np.float32)/TUNNELING_SCALE) * filament_unformed * untouching_particle
-Traceback (most recent call last):
-  File "/home/hans/University/nanoparticles/src/./main.py", line 15, in <module>
-    main()
-  File "/home/hans/University/nanoparticles/src/./main.py", line 11, in main
-    simulate.simulate(run_name)
-  File "/home/hans/University/nanoparticles/src/simulate.py", line 106, in simulate
-    analysis.analyse(run_name)
-  File "/home/hans/University/nanoparticles/src/analysis.py", line 10, in analyse
-    df = pd.read_csv(f"../results/final/{run_name}.csv")
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/hans/University/nanoparticles/venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
-    return _read(filepath_or_buffer, kwds)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/hans/University/nanoparticles/venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 620, in _read
-    parser = TextFileReader(filepath_or_buffer, **kwds)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/hans/University/nanoparticles/venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
-    self._engine = self._make_engine(f, self.engine)
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/hans/University/nanoparticles/venv/lib/python3.12/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
-    self.handles = get_handle(
-                   ^^^^^^^^^^^
-  File "/home/hans/University/nanoparticles/venv/lib/python3.12/site-packages/pandas/io/common.py", line 873, in get_handle
-    handle = open(
-             ^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: '../results/final/fast_100pico2.csv'
+/home/hans/University/nanoparticles/venv/lib/python3.12/site-packages/numpy/lib/function_base.py:2897: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/home/hans/University/nanoparticles/venv/lib/python3.12/site-packages/numpy/lib/function_base.py:2898: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+/home/hans/University/nanoparticles/venv/lib/python3.12/site-packages/numpy/lib/function_base.py:2889: RuntimeWarning: Degrees of freedom <= 0 for slice
+  c = cov(x, y, rowvar, dtype=dtype)
+/home/hans/University/nanoparticles/venv/lib/python3.12/site-packages/numpy/lib/function_base.py:2748: RuntimeWarning: divide by zero encountered in divide
+  c *= np.true_divide(1, fact)
+/home/hans/University/nanoparticles/venv/lib/python3.12/site-packages/numpy/lib/function_base.py:2748: RuntimeWarning: invalid value encountered in multiply
+  c *= np.true_divide(1, fact)
+[1.         0.99158352 0.98331479 ... 0.70759522        nan        nan]

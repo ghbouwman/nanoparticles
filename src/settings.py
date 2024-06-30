@@ -18,7 +18,6 @@ SCHRODINGER_CONSTANT = 2*ELECTRON_MASS / HBAR**2
 NR_STEPS = 10_000 # Number of iterations in the simulation loop
 DELTA_T = 1e-12 # Simulation timestep
 HIGH_RESISTANCE = 1e30 # very high resistance between the source and drain
-MAX_DISTANCE = 10e-9 # Important for making sure we don't get a singular matrix.
 MAX_RESISTANCE = 1e15 # max resistance allowed in the distance computation
 MAX_PARTICLES = 20_000 # high numbers wil cause large memory to be used
 
@@ -37,11 +36,13 @@ TUNNELING_SCALE = 1 / sqrt(SCHRODINGER_CONSTANT*WORK_FUNCTION_MO)
 MO_RADIUS = 0.15e-9
 
 # Physical parameters.
-SUBSTRATE_SIZE = .1e-6 # width/height of the substrate
-PARTICLE_DIAMETER_MEAN = 20e-9 #
-PARTICLE_DIAMETER_STD = 1e-9 #
+PARTICLE_DIAMETER_MEAN = 20e-9 
+L_OVER_D = 10
+SUBSTRATE_SIZE = L_OVER_D * PARTICLE_DIAMETER_MEAN # .2e-6 # width/height of the substrate
+PARTICLE_DIAMETER_STD = PARTICLE_DIAMETER_MEAN / 20 # used to be 1e-9, but I made it dyanmic for ease of use
 BIAS = 10e-3 # voltage over the source and drain
-TOUCHING_CONDUCTIVITY = hex(3.5) * CONDUCTANCE_QUANTUM # takes radius where tunnelling happens between atoms in touching nanoparticles
+TOUCHING_CONDUCTIVITY = hex(2*TUNNELLING_SCALE/MO_RADIUS) * CONDUCTANCE_QUANTUM # takes radius where tunnelling happens between atoms in touching nanoparticles
 
+MAX_DISTANCE = PARTICLE_DIAMETER_MEAN / 2 # Important for making sure we don't get a singular matrix.
 MAX_CURRENT = BIAS / HIGH_RESISTANCE
 assert MAX_DISTANCE < SUBSTRATE_SIZE
